@@ -2,28 +2,22 @@
 # A Docker image for running neuronal network simulations
 #
 
-FROM neuralensemble/base_py2
+FROM neuralensemble/base:py2
 MAINTAINER andrew.davison@unic.cnrs-gif.fr
 
-ENV NEST_VER=2.10.0 NRN_VER=7.4
+ENV NEST_VER=2.2.2 NRN_VER=7.4
 ENV NEST=nest-$NEST_VER NRN=nrn-$NRN_VER
 
 WORKDIR /home/docker/packages
 RUN wget https://github.com/nest/nest-simulator/releases/download/v$NEST_VER/$NEST.tar.gz
 RUN wget http://www.neuron.yale.edu/ftp/neuron/versions/v$NRN_VER/$NRN.tar.gz
 RUN tar xzf $NEST.tar.gz; tar xzf $NRN.tar.gz; rm $NEST.tar.gz $NRN.tar.gz
-RUN svn co --username Anonymous --password Anonymous --non-interactive http://svn.incf.org/svn/libneurosim/trunk libneurosim
-RUN cd libneurosim; ./autogen.sh
 
 RUN mkdir $VENV/build
 WORKDIR $VENV/build
-RUN mkdir libneurosim; \
-    cd libneurosim; \
-    PYTHON=$VENV/bin/python $HOME/packages/libneurosim/configure --prefix=$VENV; \
-    make; make install; ls $VENV/lib $VENV/include
 RUN mkdir $NEST; \
     cd $NEST; \
-    PYTHON=$VENV/bin/python $HOME/packages/$NEST/configure --with-mpi --prefix=$VENV --with-libneurosim=$VENV; \
+    PYTHON=$VENV/bin/python $HOME/packages/$NEST/configure --with-mpi --prefix=$VENV --with-python=$VENV/bin/python --with-pynest-prefix=$VENV; \
     make; make install
 RUN mkdir $NRN; \
     cd $NRN; \
@@ -32,7 +26,8 @@ RUN mkdir $NRN; \
     cd src/nrnpython; $VENV/bin/python setup.py install; \
     cd $VENV/bin; ln -s ../x86_64/bin/nrnivmodl
 
-RUN PATH=$PATH:$VENV/bin $VENV/bin/pip install lazyarray brian nrnutils PyNN
+
+ENV PATH=$VENV/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+RUN $VENV/bin/pip install brian nrnutils PyNN==0.7.5
 
 WORKDIR /home/docker/
-RUN echo "source $VENV/bin/activate" >> .bashrc
