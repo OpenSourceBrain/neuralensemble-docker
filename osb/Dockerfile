@@ -11,7 +11,7 @@ MAINTAINER p.gleeson@gmail.com
 USER root
 
 RUN apt-get update 
-RUN apt-get install -y default-jdk python-tk python-lxml octave
+RUN apt-get install -y default-jdk python-tk python-lxml octave maven
 RUN apt-get install -y htop
 
 RUN /bin/bash -c "source ~/env/neurosci/bin/activate"
@@ -30,11 +30,51 @@ RUN cd osb-model-validation; python setup.py install
 RUN sed -i -e s/'\/usr\/bin\/python'/'\/home\/docker\/env\/neurosci\/bin\/python'/g /usr/local/bin/omv
 
 
-# Install jNeuroML
+# Install jNeuroML, PyLEMS & NeuroML2
 
 RUN omv install jNeuroML
 ENV JNML_HOME=$HOME/jnml/jNeuroMLJar
-ENV PATH=$PATH:$JNML_HOME
 
+RUN omv install jLEMS
+ENV LEMS_HOME=$HOME/jLEMS
+
+RUN omv install PyLEMS_NeuroML2
+
+ENV PATH=$PATH:$JNML_HOME:$LEMS_HOME
+
+
+# Set up NEURON (should be updated in neuralensemble/simulationx:py2...)
+
+ENV PATH=$PATH:$HOME/env/neurosci/x86_64/bin
+ENV NEURON_HOME=$HOME/env/neurosci/x86_64
+
+
+# Set up NEST
+
+ENV NEST_INSTALL_DIR=$HOME/env/neurosci
+
+
+# Install NetPyNE
+
+RUN omv install NetPyNE
+
+
+# Install GENESIS
+
+RUN apt-get install -y bison flex
+RUN omv install genesis
+ENV PATH=$PATH:$HOME/genesis/genesis2.4gamma-master/src
+
+
+# Install OSB_API
+
+RUN git clone https://github.com/OpenSourceBrain/OSB_API.git
+RUN cd OSB_API/python; python setup.py install
+
+
+
+# Install Brian2
+
+RUN omv install Brian2
 
 
