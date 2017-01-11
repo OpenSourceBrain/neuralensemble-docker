@@ -26,7 +26,7 @@ RUN pip install git+https://github.com/NeuroML/pyNeuroML
 # Install OMV
 
 RUN git clone https://github.com/OpenSourceBrain/osb-model-validation.git
-RUN cd osb-model-validation; python setup.py install
+RUN cd osb-model-validation; python setup.py install; cd -
 RUN sed -i -e s/'\/usr\/bin\/python'/'\/home\/docker\/env\/neurosci\/bin\/python'/g /usr/local/bin/omv
 
 
@@ -69,12 +69,17 @@ ENV PATH=$PATH:$HOME/genesis/genesis2.4gamma-master/src
 # Install OSB_API
 
 RUN git clone https://github.com/OpenSourceBrain/OSB_API.git
-RUN cd OSB_API/python; python setup.py install
-
+RUN cd OSB_API/python; python setup.py install; cd -
 
 
 # Install Brian2
 
 RUN omv install Brian2
+
+
+# Install neuroConstruct
+
+RUN git clone git://github.com/NeuralEnsemble/neuroConstruct.git
+RUN cd neuroConstruct; ./updatenC.sh; ./nC.sh -make; cd -
 
 
