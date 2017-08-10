@@ -82,7 +82,7 @@ RUN omv install Brian2
 RUN git clone git://github.com/NeuralEnsemble/neuroConstruct.git
 RUN cd neuroConstruct; ./updatenC.sh; ./nC.sh -make; cd -
 
-RUN echo "Done!"
+RUN echo "Built!"
 
 
 
