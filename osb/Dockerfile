@@ -5,7 +5,8 @@
 # for libraries required for OSB models
 #
 
-FROM neuralensemble/simulationx:py2
+# Use tagged version of neuralensemble/simulationx, e.g. Python 2, PyNN 0.9.1
+FROM neuralensemble/simulationx:py2_pynn091
 MAINTAINER p.gleeson@gmail.com
 
 USER root
@@ -82,12 +83,11 @@ RUN omv install Brian2
 RUN git clone git://github.com/NeuralEnsemble/neuroConstruct.git
 RUN cd neuroConstruct; ./updatenC.sh; ./nC.sh -make; cd -
 
+# Some aliases
 
-# Install latest version of quantities package
+RUN echo '\n\nalias cd..="cd .."\nalias h=history\nalias ll="ls -alt"' >> ~/.bashrc
 
-RUN $VENV/bin/pip install --upgrade quantities 
-
-RUN echo "Built!"
+RUN echo "Built OSB Docker image!"
 
 
 
