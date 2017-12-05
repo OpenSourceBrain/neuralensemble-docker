@@ -27,7 +27,7 @@ RUN pip install git+https://github.com/NeuroML/pyNeuroML
 # Install OMV
 
 RUN git clone https://github.com/OpenSourceBrain/osb-model-validation.git
-RUN cd osb-model-validation; python setup.py install; cd -
+RUN cd osb-model-validation && python setup.py install && cd -
 RUN sed -i -e s/'\/usr\/bin\/python'/'\/home\/docker\/env\/neurosci\/bin\/python'/g /usr/local/bin/omv
 
 
@@ -82,6 +82,11 @@ RUN omv install Brian2
 
 RUN git clone git://github.com/NeuralEnsemble/neuroConstruct.git
 RUN cd neuroConstruct; ./updatenC.sh; ./nC.sh -make; cd -
+
+
+# Install Moose
+
+RUN omv install Moose
 
 # Some aliases
 
