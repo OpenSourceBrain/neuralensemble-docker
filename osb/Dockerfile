@@ -88,6 +88,18 @@ RUN cd neuroConstruct; ./updatenC.sh; ./nC.sh -make; cd -
 
 RUN omv install Moose
 
+
+# Update PyNN
+
+RUN git clone https://github.com/NeuralEnsemble/PyNN.git
+RUN cd PyNN; $HOME/env/neurosci/bin/python setup.py install; cd -
+
+
+# Update Brian
+
+RUN git clone https://github.com/brian-team/brian.git
+RUN cd brian; $HOME/env/neurosci/bin/python setup.py install; cd -
+
 # Some aliases
 
 RUN echo '\n\nalias cd..="cd .."\nalias h=history\nalias ll="ls -alt"' >> ~/.bashrc
