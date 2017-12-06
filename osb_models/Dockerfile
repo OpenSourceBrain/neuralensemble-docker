@@ -6,7 +6,7 @@
 #
 
 # Version from Dockerhub
-FROM opensourcebrain/simulation:osb-v0.3  
+FROM opensourcebrain/simulation:osb 
 
 # Local build
 #FROM osb                                   
