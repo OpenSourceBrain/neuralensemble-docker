@@ -1,3 +1,6 @@
 .idea
 /osb/regenerate.sh
 /osb_models/regenerate.sh
+/osb_models/generate.sh
+/osb_models/run.sh
+/osb_models/run2.sh
