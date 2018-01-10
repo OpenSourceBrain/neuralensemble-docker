@@ -100,6 +100,11 @@ RUN cd PyNN; $HOME/env/neurosci/bin/python setup.py install; cd -
 RUN git clone https://github.com/brian-team/brian.git
 RUN cd brian; $HOME/env/neurosci/bin/python setup.py install; cd -
 
+
+# Get some latest Python packages
+
+RUN $HOME/env/neurosci/bin/pip install lazyarray --upgrade
+
 # Some aliases
 
 RUN echo '\n\nalias cd..="cd .."\nalias h=history\nalias ll="ls -alt"' >> ~/.bashrc
