@@ -104,7 +104,7 @@ RUN cd brian; $HOME/env/neurosci/bin/python setup.py install; cd -
 
 RUN echo '\n\nalias cd..="cd .."\nalias h=history\nalias ll="ls -alt"' >> ~/.bashrc
 
-RUN echo "Built OSB Docker image!"
+RUN echo "Built the main OSB Docker image!"
 
 
 
