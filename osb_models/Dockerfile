@@ -6,7 +6,7 @@
 #
 
 # Version from Dockerhub
-FROM opensourcebrain/simulation:osb-v0.3  
+FROM opensourcebrain/simulation:osb-v0.4
 
 # Local build
 #FROM osb                                   
@@ -31,6 +31,10 @@ RUN osb-model-validation/utilities/getcoreosbprojects.sh
 RUN cd coreprojects/SmithEtAl2013-L23DendriticSpikes/NEURON/test && nrnivmodl ../mod.files && cd -
 
 RUN cd coreprojects/ca1/NeuroML2 && nrnivmodl .. && cd -
+
+
+
+RUN cd coreprojects/PotjansDiesmann2014/ && ./make_tests.sh && cd -
 
 
 
