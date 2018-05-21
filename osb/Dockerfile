@@ -105,6 +105,7 @@ RUN cd brian; $HOME/env/neurosci/bin/python setup.py install; cd -
 
 RUN $HOME/env/neurosci/bin/pip install lazyarray --upgrade
 
+
 # Some aliases
 
 RUN echo '\n\nalias cd..="cd .."\nalias h=history\nalias ll="ls -alt"' >> ~/.bashrc
