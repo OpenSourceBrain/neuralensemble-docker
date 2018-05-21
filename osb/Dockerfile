@@ -91,7 +91,7 @@ RUN omv install Moose
 
 # Update PyNN
 
-RUN git clone https://github.com/NeuralEnsemble/PyNN.git
+RUN git clone https://github.com/pgleeson/PyNN.git  # pgleeson has the latest NML2 import/export code!
 RUN cd PyNN; $HOME/env/neurosci/bin/python setup.py install; cd -
 
 
