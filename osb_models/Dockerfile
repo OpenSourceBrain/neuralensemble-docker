@@ -32,6 +32,7 @@ RUN cd coreprojects/SmithEtAl2013-L23DendriticSpikes/NEURON/test && nrnivmodl ..
 
 RUN cd coreprojects/ca1/NeuroML2 && nrnivmodl .. && cd -
 
+RUN cd coreprojects/SadehEtAl2017-InhibitionStabilizedNetworks && ./make_tests.sh && cd -
 
 
 RUN cd coreprojects/PotjansDiesmann2014/ && ./make_tests.sh && cd -
