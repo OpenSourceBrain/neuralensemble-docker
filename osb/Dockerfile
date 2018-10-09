@@ -70,7 +70,7 @@ ENV PATH=$PATH:$HOME/genesis/genesis2.4gamma-master/src
 # Install OSB_API
 
 RUN git clone https://github.com/OpenSourceBrain/OSB_API.git
-RUN cd OSB_API/python; python setup.py install; cd -
+RUN cd OSB_API/python && python setup.py install && cd -
 
 
 # Install Brian2
@@ -81,7 +81,7 @@ RUN omv install Brian2
 # Install neuroConstruct
 
 RUN git clone git://github.com/NeuralEnsemble/neuroConstruct.git
-RUN cd neuroConstruct; ./updatenC.sh; ./nC.sh -make; cd -
+RUN cd neuroConstruct && ./updatenC.sh && ./nC.sh -make && cd -
 
 
 # Install Moose
@@ -91,14 +91,21 @@ RUN omv install Moose
 
 # Update PyNN
 
-RUN git clone https://github.com/pgleeson/PyNN.git  # pgleeson has the latest NML2 import/export code!
-RUN cd PyNN; $HOME/env/neurosci/bin/python setup.py install; cd -
+USER docker
+RUN $HOME/env/neurosci/bin/pip uninstall pynn -y
 
+USER root
+RUN git clone https://github.com/NeuralEnsemble/PyNN.git  && \
+    cd  PyNN && \
+    git checkout  neuroml && \  
+    $HOME/env/neurosci/bin/python  setup.py install && \
+    cd -   # neuroml branch has the latest NML2 import/export code!
+RUN which python
 
 # Update Brian
 
 RUN git clone https://github.com/brian-team/brian.git
-RUN cd brian; $HOME/env/neurosci/bin/python setup.py install; cd -
+RUN cd brian && $HOME/env/neurosci/bin/python setup.py install && cd -
 
 
 # Get some latest Python packages
