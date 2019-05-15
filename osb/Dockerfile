@@ -6,7 +6,9 @@
 #
 
 # Use tagged version of neuralensemble/simulationx, e.g. Python 2, PyNN 0.9.1
-FROM neuralensemble/simulationx:py2_pynn091
+#FROM neuralensemble/simulationx:py2_pynn091
+# Temp for testing
+FROM neuralensemble/simulationx:py2
 MAINTAINER p.gleeson@gmail.com
 
 USER root
@@ -57,12 +59,17 @@ ENV NEST_INSTALL_DIR=$HOME/env/neurosci
 
 # Install NetPyNE
 
-RUN omv install NetPyNE
+RUN $HOME/env/neurosci/bin/pip install pandas 
+RUN git clone https://github.com/Neurosim-lab/netpyne.git  && \
+    cd netpyne && \
+    git checkout neuroml_updates && \
+    $HOME/env/neurosci/bin/python setup.py install && \
+    cd -
 
 
 # Install GENESIS
 
-RUN apt-get install -y bison flex
+RUN apt-get install -y bison flex unzip
 RUN omv install genesis
 ENV PATH=$PATH:$HOME/genesis/genesis2.4gamma-master/src
 
@@ -71,11 +78,6 @@ ENV PATH=$PATH:$HOME/genesis/genesis2.4gamma-master/src
 
 RUN git clone https://github.com/OpenSourceBrain/OSB_API.git
 RUN cd OSB_API/python && python setup.py install && cd -
-
-
-# Install Brian2
-
-RUN omv install Brian2
 
 
 # Install neuroConstruct
@@ -97,7 +99,7 @@ RUN $HOME/env/neurosci/bin/pip uninstall pynn -y
 USER root
 RUN git clone https://github.com/NeuralEnsemble/PyNN.git  && \
     cd  PyNN && \
-    git checkout  neuroml && \  
+    git checkout neuroml && \  
     $HOME/env/neurosci/bin/python  setup.py install && \
     cd -   # neuroml branch has the latest NML2 import/export code!
 RUN which python
@@ -106,6 +108,11 @@ RUN which python
 
 RUN git clone https://github.com/brian-team/brian.git
 RUN cd brian && $HOME/env/neurosci/bin/python setup.py install && cd -
+
+
+# Install Brian2
+
+RUN omv install Brian2
 
 
 # Get some latest Python packages
