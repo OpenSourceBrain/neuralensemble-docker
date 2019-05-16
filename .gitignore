@@ -8,3 +8,7 @@
 /osb/runLocal.sh
 /osb_models/runHub.sh
 /osb_models/runLocal.sh
+/base/regenerate.sh
+/osb/generate.sh
+/simulation/regenerate.sh
+/simulationx/regenerate.sh
