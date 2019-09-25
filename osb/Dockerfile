@@ -15,7 +15,7 @@ USER root
 
 RUN apt-get update 
 RUN apt-get install -y default-jdk python-tk python-lxml octave maven
-RUN apt-get install -y htop
+RUN apt-get install -y htop libxml2-dev libxslt-dev zlib1g-dev
 
 RUN /bin/bash -c "source ~/env/neurosci/bin/activate"
 
@@ -59,7 +59,7 @@ ENV NEST_INSTALL_DIR=$HOME/env/neurosci
 
 # Install NetPyNE
 
-RUN $HOME/env/neurosci/bin/pip install pandas 
+RUN $HOME/env/neurosci/bin/pip install pandas==0.23.4 matplotlib==2.2.4
 RUN git clone https://github.com/Neurosim-lab/netpyne.git  && \
     cd netpyne && \
     git checkout neuroml_updates && \
