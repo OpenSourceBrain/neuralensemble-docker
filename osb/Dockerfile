@@ -112,7 +112,7 @@ RUN cd brian && $HOME/env/neurosci/bin/python setup.py install && cd -
 
 # Install Brian2
 
-RUN omv install Brian2
+RUN $HOME/env/neurosci/bin/pip install Brian2
 
 
 # Get some latest Python packages
